@@ -1,30 +1,20 @@
 import os, requests
-from dotenv import load_dotenv
-
-load_dotenv()  # reads .env in current directory
-
-import sys, requests
-
-BASE      = "https://jira.mohaymen.ir"   # include /jira if your site uses a context path
-USERNAME  = "a.rajabian"              # DC often needs the short username, not email
-PASSWORD  = "9=$!#L0sYB&itA"
-VERIFY_CA = True                         # or path to corp CA PEM, e.g. "/etc/ssl/certs/corp.pem"
-
-
+from dotenv import load_dotenv 
 import json
 import csv
 
-BASE = "https://jira.mohaymen.ir"
-AUTH = (USERNAME, PASSWORD)  # <-- same vars you already have
+load_dotenv() 
+
+BASE = os.environ["JIRA_URL"]
+AUTH = (os.environ["JIRA_USERNAME"], os.environ["JIRA_PASSWORD"])  # <-- same vars you already have
 
 JQL = (
     'project = "NTA TPS SM" AND issuetype = Incident AND filter = "32233" '
     'AND status in ( "In Progress - 2", "In Progress - 3")'
     'AND "Time to resolution" < remaining("1h")'
     'AND cf[18502] = "TO" '
-    'AND status CHANGED AFTER -5h'
+    'AND status CHANGED AFTER -1d'
 )
-
 
 FIELDS = "key,summary,status,assignee,priority"
 PAGE_SIZE = 100
@@ -71,7 +61,8 @@ with open("jira_results.csv", "w", newline="", encoding="utf-8-sig") as fh:
         ])
 print("Wrote CSV: jira_results.csv")
 
-# 4) Also write raw JSON (full fields you requested)
-with open("jira_results.json", "w", encoding="utf-8") as fh:
-    json.dump(all_issues, fh, ensure_ascii=False, indent=2)
-print("Wrote JSON: jira_results.json")
+# # 4) Also write raw JSON (full fields you requested)
+# with open("jira_results.json", "w", encoding="utf-8") as fh:
+#     json.dump(all_issues, fh, ensure_ascii=False, indent=2)
+# print("Wrote JSON: jira_results.json")
+

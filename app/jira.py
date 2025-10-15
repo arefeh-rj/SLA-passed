@@ -13,10 +13,10 @@ JQL = (
     'AND status in ( "In Progress - 2", "In Progress - 3")'
     'AND "Time to resolution" < remaining("1h")'
     'AND cf[18502] = "TO" '
-    'AND status CHANGED AFTER -1d'
+    'AND status CHANGED AFTER -5d'
 )
 
-FIELDS = "key,summary,status,assignee,priority"
+FIELDS = "key,summary,status,assignee,priority,assignee"
 PAGE_SIZE = 100
 
 s = requests.Session()
@@ -49,20 +49,29 @@ while start < total:
 # 3) Write a compact CSV (one row per issue)
 with open("jira_results.csv", "w", newline="", encoding="utf-8-sig") as fh:
     w = csv.writer(fh)
-    w.writerow(["key", "summary", "status", "assignee", "priority"])
+    w.writerow(["key", "summary", "status", "assignee", "priority","assignee_id","isWatching"])
     for i in all_issues:
-        f = i["fields"]
+        f = i.get("fields", {})
+        assignee = f.get("assignee") or {}
+        assignee_id = assignee.get("accountId") or assignee.get("name") or ""
+        status_name = (f.get("status") or {}).get("name", "")
+        priority_name = (f.get("priority") or {}).get("name", "")
+        watches = f.get("watches") or {}
         w.writerow([
-            i["key"],
-            f.get("summary", ""),
-            (f.get("status") or {}).get("name", ""),
-            (f.get("assignee") or {}).get("displayName", "Unassigned"),
-            (f.get("priority") or {}).get("name", ""),
+            i.get("key", ""),
+            f.get("summary", "") or "",
+            status_name,
+            assignee.get("displayName", "Unassigned") if assignee else "Unassigned",
+            assignee_id,
+            priority_name,
+            watches.get("watchCount", 0),
+            watches.get("isWatching", False),
         ])
-print("Wrote CSV: jira_results.csv")
 
-# # 4) Also write raw JSON (full fields you requested)
+
 # with open("jira_results.json", "w", encoding="utf-8") as fh:
 #     json.dump(all_issues, fh, ensure_ascii=False, indent=2)
 # print("Wrote JSON: jira_results.json")
+
+print("Wrote CSV: jira_results.csv")
 

@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS users (
   id BIGSERIAL PRIMARY KEY,
   display_name TEXT NOT NULL CHECK (length(btrim(display_name)) > 0),
   email CITEXT UNIQUE,
+  user_name text UNIQUE,
   phone_number TEXT,
   note TEXT,
   role TEXT CHECK (role IN ('admin','manager','member','viewer')) DEFAULT 'member',
@@ -28,12 +29,12 @@ CREATE TABLE IF NOT EXISTS users (
 
 # 3) insert rows — columns MUST match the table; use executemany for multiple rows
 sql = """
-INSERT INTO users (display_name, email, phone_number, note, role)
-VALUES (%s, %s, %s, %s, %s)
+INSERT INTO users (display_name, email,user_name, phone_number, note, role)
+VALUES (%s, %s, %s, %s, %s, %s)
 """
 rows = [
-    ("arefe",   "rajabian.arefeh79@gmail.com", "989334522831", "On-call", "admin"),
-    ("nargess", "rajabian.arefeh99@gmail.com", "989024610775", "",        "member"),
+    ("arefe", "rajabian.arefeh79@gmail.com", "a.rajabian", "989334522831", "On-call", "admin"),
+    ("nargess", "rajabian.arefeh99@gmail.com","n.dadkhah",  "989024610775", "",        "member"),
 ]
 cur.executemany(sql, rows)
 

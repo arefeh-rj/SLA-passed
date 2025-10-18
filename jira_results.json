@@ -1,0 +1,362 @@
+[
+  {
+    "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+    "id": "742439",
+    "self": "https://jira.mohaymen.ir/rest/api/2/issue/742439",
+    "key": "NTATPSSM-11029",
+    "fields": {
+      "summary": "مشکل max retry روی مجری uat",
+      "assignee": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/user?username=a.fazlollahi",
+        "name": "a.fazlollahi",
+        "key": "JIRAUSER25803",
+        "emailAddress": "",
+        "avatarUrls": {
+          "48x48": "https://jira.mohaymen.ir/secure/useravatar?avatarId=10351",
+          "24x24": "https://jira.mohaymen.ir/secure/useravatar?size=small&avatarId=10351",
+          "16x16": "https://jira.mohaymen.ir/secure/useravatar?size=xsmall&avatarId=10351",
+          "32x32": "https://jira.mohaymen.ir/secure/useravatar?size=medium&avatarId=10351"
+        },
+        "displayName": "امیر فضل الهی",
+        "active": true,
+        "timeZone": "Asia/Tehran"
+      },
+      "priority": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/priority/2",
+        "iconUrl": "https://jira.mohaymen.ir/images/icons/priorities/highest.svg",
+        "name": "High",
+        "id": "2"
+      },
+      "status": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/status/10801",
+        "description": "Tier 2",
+        "iconUrl": "https://jira.mohaymen.ir/images/icons/statuses/generic.png",
+        "name": "In Progress - 2",
+        "id": "10801",
+        "statusCategory": {
+          "self": "https://jira.mohaymen.ir/rest/api/2/statuscategory/4",
+          "id": 4,
+          "key": "indeterminate",
+          "colorName": "inprogress",
+          "name": "In Progress"
+        }
+      }
+    },
+    "renderedFields": null
+  },
+  {
+    "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+    "id": "742337",
+    "self": "https://jira.mohaymen.ir/rest/api/2/issue/742337",
+    "key": "NTATPSSM-11020",
+    "fields": {
+      "summary": "خطا در سناریو کال سنتر گمرک",
+      "assignee": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/user?username=h.jannesari",
+        "name": "h.jannesari",
+        "key": "JIRAUSER25501",
+        "emailAddress": "",
+        "avatarUrls": {
+          "48x48": "https://jira.mohaymen.ir/secure/useravatar?avatarId=10122",
+          "24x24": "https://jira.mohaymen.ir/secure/useravatar?size=small&avatarId=10122",
+          "16x16": "https://jira.mohaymen.ir/secure/useravatar?size=xsmall&avatarId=10122",
+          "32x32": "https://jira.mohaymen.ir/secure/useravatar?size=medium&avatarId=10122"
+        },
+        "displayName": "محمدحسین جان نثاری",
+        "active": true,
+        "timeZone": "Asia/Tehran"
+      },
+      "priority": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/priority/10200",
+        "iconUrl": "https://jira.mohaymen.ir/images/icons/priorities/critical.svg",
+        "name": "Critical",
+        "id": "10200"
+      },
+      "status": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/status/10801",
+        "description": "Tier 2",
+        "iconUrl": "https://jira.mohaymen.ir/images/icons/statuses/generic.png",
+        "name": "In Progress - 2",
+        "id": "10801",
+        "statusCategory": {
+          "self": "https://jira.mohaymen.ir/rest/api/2/statuscategory/4",
+          "id": 4,
+          "key": "indeterminate",
+          "colorName": "inprogress",
+          "name": "In Progress"
+        }
+      }
+    },
+    "renderedFields": null
+  },
+  {
+    "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+    "id": "742153",
+    "self": "https://jira.mohaymen.ir/rest/api/2/issue/742153",
+    "key": "NTATPSSM-11002",
+    "fields": {
+      "summary": "مشکل healthcheck",
+      "assignee": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/user?username=f.jame",
+        "name": "f.jame",
+        "key": "JIRAUSER19504",
+        "emailAddress": "f.jame@mohaymen.ir",
+        "avatarUrls": {
+          "48x48": "https://jira.mohaymen.ir/secure/useravatar?ownerId=JIRAUSER19504&avatarId=26302",
+          "24x24": "https://jira.mohaymen.ir/secure/useravatar?size=small&ownerId=JIRAUSER19504&avatarId=26302",
+          "16x16": "https://jira.mohaymen.ir/secure/useravatar?size=xsmall&ownerId=JIRAUSER19504&avatarId=26302",
+          "32x32": "https://jira.mohaymen.ir/secure/useravatar?size=medium&ownerId=JIRAUSER19504&avatarId=26302"
+        },
+        "displayName": "فرشاد جامع اصل",
+        "active": true,
+        "timeZone": "Asia/Tehran"
+      },
+      "priority": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/priority/2",
+        "iconUrl": "https://jira.mohaymen.ir/images/icons/priorities/highest.svg",
+        "name": "High",
+        "id": "2"
+      },
+      "status": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/status/10801",
+        "description": "Tier 2",
+        "iconUrl": "https://jira.mohaymen.ir/images/icons/statuses/generic.png",
+        "name": "In Progress - 2",
+        "id": "10801",
+        "statusCategory": {
+          "self": "https://jira.mohaymen.ir/rest/api/2/statuscategory/4",
+          "id": 4,
+          "key": "indeterminate",
+          "colorName": "inprogress",
+          "name": "In Progress"
+        }
+      }
+    },
+    "renderedFields": null
+  },
+  {
+    "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+    "id": "742053",
+    "self": "https://jira.mohaymen.ir/rest/api/2/issue/742053",
+    "key": "NTATPSSM-10994",
+    "fields": {
+      "summary": "خطای max depth of 10 reached",
+      "assignee": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/user?username=p.rahimi",
+        "name": "p.rahimi",
+        "key": "JIRAUSER29114",
+        "emailAddress": "",
+        "avatarUrls": {
+          "48x48": "https://jira.mohaymen.ir/secure/useravatar?avatarId=10122",
+          "24x24": "https://jira.mohaymen.ir/secure/useravatar?size=small&avatarId=10122",
+          "16x16": "https://jira.mohaymen.ir/secure/useravatar?size=xsmall&avatarId=10122",
+          "32x32": "https://jira.mohaymen.ir/secure/useravatar?size=medium&avatarId=10122"
+        },
+        "displayName": "پارسا رحیمی",
+        "active": true,
+        "timeZone": "Asia/Tehran"
+      },
+      "priority": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/priority/2",
+        "iconUrl": "https://jira.mohaymen.ir/images/icons/priorities/highest.svg",
+        "name": "High",
+        "id": "2"
+      },
+      "status": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/status/10802",
+        "description": "Tier 3",
+        "iconUrl": "https://jira.mohaymen.ir/images/icons/statuses/generic.png",
+        "name": "In Progress - 3",
+        "id": "10802",
+        "statusCategory": {
+          "self": "https://jira.mohaymen.ir/rest/api/2/statuscategory/4",
+          "id": 4,
+          "key": "indeterminate",
+          "colorName": "inprogress",
+          "name": "In Progress"
+        }
+      }
+    },
+    "renderedFields": null
+  },
+  {
+    "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+    "id": "741157",
+    "self": "https://jira.mohaymen.ir/rest/api/2/issue/741157",
+    "key": "NTATPSSM-10905",
+    "fields": {
+      "summary": "عدم امکان ویرایش گزارش در pa(برقرار نشدن ارتباط pa‌با dia)",
+      "assignee": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/user?username=moha.mohammadi",
+        "name": "moha.mohammadi",
+        "key": "JIRAUSER23605",
+        "emailAddress": "",
+        "avatarUrls": {
+          "48x48": "https://jira.mohaymen.ir/secure/useravatar?avatarId=10122",
+          "24x24": "https://jira.mohaymen.ir/secure/useravatar?size=small&avatarId=10122",
+          "16x16": "https://jira.mohaymen.ir/secure/useravatar?size=xsmall&avatarId=10122",
+          "32x32": "https://jira.mohaymen.ir/secure/useravatar?size=medium&avatarId=10122"
+        },
+        "displayName": "محمد محمدی",
+        "active": true,
+        "timeZone": "Asia/Tehran"
+      },
+      "priority": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/priority/2",
+        "iconUrl": "https://jira.mohaymen.ir/images/icons/priorities/highest.svg",
+        "name": "High",
+        "id": "2"
+      },
+      "status": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/status/10802",
+        "description": "Tier 3",
+        "iconUrl": "https://jira.mohaymen.ir/images/icons/statuses/generic.png",
+        "name": "In Progress - 3",
+        "id": "10802",
+        "statusCategory": {
+          "self": "https://jira.mohaymen.ir/rest/api/2/statuscategory/4",
+          "id": 4,
+          "key": "indeterminate",
+          "colorName": "inprogress",
+          "name": "In Progress"
+        }
+      }
+    },
+    "renderedFields": null
+  },
+  {
+    "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+    "id": "741106",
+    "self": "https://jira.mohaymen.ir/rest/api/2/issue/741106",
+    "key": "NTATPSSM-10898",
+    "fields": {
+      "summary": "خطا هنگام افزودن کاربر جدید به سامانه در پنل ادمین",
+      "assignee": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/user?username=al.mohseni",
+        "name": "al.mohseni",
+        "key": "JIRAUSER21908",
+        "emailAddress": "al.mohseni@mohaymen.ir",
+        "avatarUrls": {
+          "48x48": "https://jira.mohaymen.ir/secure/useravatar?ownerId=JIRAUSER21908&avatarId=20414",
+          "24x24": "https://jira.mohaymen.ir/secure/useravatar?size=small&ownerId=JIRAUSER21908&avatarId=20414",
+          "16x16": "https://jira.mohaymen.ir/secure/useravatar?size=xsmall&ownerId=JIRAUSER21908&avatarId=20414",
+          "32x32": "https://jira.mohaymen.ir/secure/useravatar?size=medium&ownerId=JIRAUSER21908&avatarId=20414"
+        },
+        "displayName": "علی محسنی",
+        "active": true,
+        "timeZone": "Asia/Tehran"
+      },
+      "priority": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/priority/3",
+        "iconUrl": "https://jira.mohaymen.ir/images/icons/priorities/high.svg",
+        "name": "Medium",
+        "id": "3"
+      },
+      "status": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/status/10802",
+        "description": "Tier 3",
+        "iconUrl": "https://jira.mohaymen.ir/images/icons/statuses/generic.png",
+        "name": "In Progress - 3",
+        "id": "10802",
+        "statusCategory": {
+          "self": "https://jira.mohaymen.ir/rest/api/2/statuscategory/4",
+          "id": 4,
+          "key": "indeterminate",
+          "colorName": "inprogress",
+          "name": "In Progress"
+        }
+      }
+    },
+    "renderedFields": null
+  },
+  {
+    "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+    "id": "687657",
+    "self": "https://jira.mohaymen.ir/rest/api/2/issue/687657",
+    "key": "NTATPSSM-5977",
+    "fields": {
+      "summary": "باگ حذف شدن اعشار ثانیه در پلاگین متغیر دستی",
+      "assignee": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/user?username=p.rahimi",
+        "name": "p.rahimi",
+        "key": "JIRAUSER29114",
+        "emailAddress": "",
+        "avatarUrls": {
+          "48x48": "https://jira.mohaymen.ir/secure/useravatar?avatarId=10122",
+          "24x24": "https://jira.mohaymen.ir/secure/useravatar?size=small&avatarId=10122",
+          "16x16": "https://jira.mohaymen.ir/secure/useravatar?size=xsmall&avatarId=10122",
+          "32x32": "https://jira.mohaymen.ir/secure/useravatar?size=medium&avatarId=10122"
+        },
+        "displayName": "پارسا رحیمی",
+        "active": true,
+        "timeZone": "Asia/Tehran"
+      },
+      "priority": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/priority/2",
+        "iconUrl": "https://jira.mohaymen.ir/images/icons/priorities/highest.svg",
+        "name": "High",
+        "id": "2"
+      },
+      "status": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/status/10801",
+        "description": "Tier 2",
+        "iconUrl": "https://jira.mohaymen.ir/images/icons/statuses/generic.png",
+        "name": "In Progress - 2",
+        "id": "10801",
+        "statusCategory": {
+          "self": "https://jira.mohaymen.ir/rest/api/2/statuscategory/4",
+          "id": 4,
+          "key": "indeterminate",
+          "colorName": "inprogress",
+          "name": "In Progress"
+        }
+      }
+    },
+    "renderedFields": null
+  },
+  {
+    "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+    "id": "687016",
+    "self": "https://jira.mohaymen.ir/rest/api/2/issue/687016",
+    "key": "NTATPSSM-5336",
+    "fields": {
+      "summary": "مشکل در نمایش برچسب داده",
+      "assignee": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/user?username=am.khalili",
+        "name": "am.khalili",
+        "key": "JIRAUSER24202",
+        "emailAddress": "",
+        "avatarUrls": {
+          "48x48": "https://jira.mohaymen.ir/secure/useravatar?avatarId=10122",
+          "24x24": "https://jira.mohaymen.ir/secure/useravatar?size=small&avatarId=10122",
+          "16x16": "https://jira.mohaymen.ir/secure/useravatar?size=xsmall&avatarId=10122",
+          "32x32": "https://jira.mohaymen.ir/secure/useravatar?size=medium&avatarId=10122"
+        },
+        "displayName": "امیر خلیلی",
+        "active": true,
+        "timeZone": "Asia/Tehran"
+      },
+      "priority": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/priority/3",
+        "iconUrl": "https://jira.mohaymen.ir/images/icons/priorities/high.svg",
+        "name": "Medium",
+        "id": "3"
+      },
+      "status": {
+        "self": "https://jira.mohaymen.ir/rest/api/2/status/10801",
+        "description": "Tier 2",
+        "iconUrl": "https://jira.mohaymen.ir/images/icons/statuses/generic.png",
+        "name": "In Progress - 2",
+        "id": "10801",
+        "statusCategory": {
+          "self": "https://jira.mohaymen.ir/rest/api/2/statuscategory/4",
+          "id": 4,
+          "key": "indeterminate",
+          "colorName": "inprogress",
+          "name": "In Progress"
+        }
+      }
+    },
+    "renderedFields": null
+  }
+]

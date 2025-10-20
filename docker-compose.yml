@@ -32,19 +32,7 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin
 
-  # flyway:
-  #   image: flyway/flyway:10
-  #   command: ["-configFiles=/flyway/flyway.conf", "migrate"]
-  #   environment:
-  #     FLYWAY_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}
-  #     FLYWAY_USER: ${POSTGRES_USER}
-  #     FLYWAY_PASSWORD: ${POSTGRES_PASSWORD}
-  #   volumes:
-  #     - ./db/migrations:/flyway/sql:ro
-  #     - ./db/flyway/flyway.conf:/flyway/flyway.conf:ro
-  #   depends_on:
-  #     db:
-  #       condition: service_healthy
+  
 
 volumes:
   pg_data:
@@ -52,40 +40,3 @@ volumes:
 
 
 
-# version: "3.9"
-
-# services:
-#   db:
-#     image: postgres:16
-#     container_name: postgres
-#     restart: unless-stopped
-#     environment:
-#       POSTGRES_USER: myuser
-#       POSTGRES_PASSWORD: mypassword
-#       POSTGRES_DB: mydb
-#     ports:
-#       - "5432:5432"
-#     volumes:
-#       - pgdata:/var/lib/postgresql/data
-#     healthcheck:
-#       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB || exit 1"]
-#       interval: 10s
-#       timeout: 5s
-#       retries: 6
-#       start_period: 30s
-#   pgadmin:
-#     image: dpage/pgadmin4:8
-#     container_name: pgadmin
-#     restart: unless-stopped
-#     environment:
-#       PGADMIN_DEFAULT_EMAIL: admin@example.com
-#       PGADMIN_DEFAULT_PASSWORD: adminpass
-#     ports:
-#       - "8080:80"
-#     depends_on:
-#       db:
-#         condition: service_healthy
-
-
-# volumes:
-#   pgdata:

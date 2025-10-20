@@ -1,0 +1,8 @@
+2025-10-20 16:20:49,575 - INFO - Notification sent to 989334522831: test:  
+        - Massage: درخواست اعطای مجوز به ایجاد فراداده وتکمیل داده های مربوطه در AM  ستاره
+        - 🚨SLA : -9h 15m
+         | Status: 200 | Response: {"result_code":200,"result_message":"Message Was Sent","request_id":707987797,"user_id":"a2e78823-55d5-4705-b491-a04ed9ffb62b"}
+2025-10-20 16:20:49,764 - INFO - Notification sent to 989334522831: test:  
+        - Massage: خطا در سناریو کال سنتر گمرک
+        - 🚨SLA : -6d 4h 37m
+         | Status: 200 | Response: {"result_code":200,"result_message":"Message Was Sent","request_id":707987875,"user_id":"a2e78823-55d5-4705-b491-a04ed9ffb62b"}

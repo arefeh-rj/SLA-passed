@@ -46,7 +46,7 @@ def fetch_incidents(project_key: str, lookback_minutes: int = 15, max_results: i
     jql = (        
         'project = "NTA TPS SM" AND issuetype = Incident AND filter = "32233" '
         'AND status in ( "In Progress - 2", "In Progress - 3")'
-        'AND "Time to resolution" < remaining("1h")'
+        'AND "Time to resolution" < remaining("4h")'
         'AND cf[18502] = "TO" '
         'AND status CHANGED AFTER -7d'
     )
@@ -81,7 +81,7 @@ def fetch_incidents(project_key: str, lookback_minutes: int = 15, max_results: i
 
         
         remaining_time_data = sla_field.get("ongoingCycle", {}).get("remainingTime", {})
-        millis = remaining_time_data.get("millis", None)
+        # millis = remaining_time_data.get("millis", None)
         friendly_time = remaining_time_data.get("friendly", "N/A")
         
         # Convert to days if absolute value >24 hours and millis is valid

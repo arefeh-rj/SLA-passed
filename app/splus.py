@@ -3,9 +3,12 @@
 import os,requests
 from dotenv import load_dotenv
 import logging
+import redis
 
 load_dotenv()  # reads .env in current directory
 os.makedirs('logs', exist_ok=True)
+
+r = redis.Redis(host="localhost", port=6379, db=0, decode_responses=True)
 
 # Configure logging
 logging.basicConfig(
@@ -13,6 +16,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
+
 
 def send_notification(phone:int , text:str):
     url = os.environ["SPLUS_URL"]
@@ -39,3 +43,6 @@ def send_notification(phone:int , text:str):
         logging.error(f"Failed to send notification to {phone}: {text} | Error: {str(e)}")
         raise
 
+def cache_incident_notifications(id: str, ):
+    print(r.connection)
+    # client = redis.Redis(host='localhost', port=6379, decode_responses=True)

@@ -4,7 +4,7 @@ from db.find_users import get_user
 from app.jira import fetch_incidents
 from app.splus import send_notification
 import json
-
+import redis
 
 def main():
    
@@ -16,7 +16,7 @@ def main():
 
         massage= f"""test:  
         - Massage: {incident['summary']}
-        - SLA : {incident['SLA']}
+        - 🚨SLA : {incident['SLA']}
         """
 
         #fetch users phone number
@@ -26,7 +26,14 @@ def main():
         
     for user in users_notif:
         send_notification(user['phone'] , user['summery'])
-    
+    # print(client.connection())
+   
+
+    # print("⚠️ Warning: Action needed!")      # ⚠️
+    # print("🚨 Alert: SLA breached!")         # 🚨
+    # print("❗ Important notice")              # ❗
+    # print("❕Minor issue detected")           # ❕
+    # print("🔥 Critical failure")  
 
 if __name__ == "__main__":
     main()

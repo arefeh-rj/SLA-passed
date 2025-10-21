@@ -46,9 +46,14 @@ def fetch_incidents(project_key: str, lookback_minutes: int = 15, max_results: i
     jql = (        
         'project = "NTA TPS SM" AND issuetype = Incident AND filter = "32233" '
         'AND status in ( "In Progress - 2", "In Progress - 3")'
-        'AND "Time to resolution" < remaining("4h")'
+        'AND "Time to resolution" < remaining("1h")'
         'AND cf[18502] = "TO" '
-        'AND status CHANGED AFTER -7d'
+        # 'AND status CHANGED AFTER -7d'
+
+        # project = "NTA TPS SM" AND issuetype = Incident AND filter = "32233" 
+        # AND status in ( "In Progress - 2", "In Progress - 3")
+        # AND "Time to resolution" < remaining("1h")
+        # AND cf[18502] = "TO"  AND assignee != Unassigned
     )
     
 
@@ -60,7 +65,7 @@ def fetch_incidents(project_key: str, lookback_minutes: int = 15, max_results: i
     resp = sess.post(
         f"{base}/rest/api/2/search",
         json={"jql": jql, "maxResults": max_results,
-              "fields": ["summary", "status", "updated", "assignee", "reporter", "priority","remaining","customfield_10303"]},
+              "fields": ["summary", "status", "updated", "assignee", "reporter", "priority","remaining","customfield_10303", "customfield_17902"]},
         timeout=30,
     )
     resp.raise_for_status()
@@ -100,6 +105,7 @@ def fetch_incidents(project_key: str, lookback_minutes: int = 15, max_results: i
             "priority": (f.get("priority") or {}).get("name", "Unspecified"),
             "remaining" : f.get("remaining"),
             "SLA": convert_duration(friendly_time) ,
+            "NTA TPS CIs": f.get("customfield_17902")
             # "millis" : remaining_time
             
         })

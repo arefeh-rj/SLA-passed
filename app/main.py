@@ -11,25 +11,20 @@ def main():
     users_notif=[]
     #fetch incidents
     incidents = fetch_incidents(project_key="NTA TPS SM", lookback_minutes=60)
-    
 
     for incident in incidents:
         user = get_user(incident['accountId'])
+        print(user)
 
-    #     massage= f"""test:  
-    #     - Massage: {incident['summary']}
-    #     - 🚨SLA : {incident['SLA']}
-    #     """
-
-    #     #fetch users phone number
+        #fetch users phone number
         if user is not None: 
-            # users_notif.append({'id':incident['accountId'],'phone':user['phone_number'],'summery':massage})
             users_notif.append({'incident':incident,'user':user})
 
-    for user in users_notif:
-        send_notification(user['incident'] , user['user'])
-   
 
+    # for user in users_notif:
+    #     send_notification(user['incident'] , user['user'])
+   
+    # print('hello',users_notif)
     # print("⚠️ Warning: Action needed!")      # ⚠️
     # print("🚨 Alert: SLA breached!")         # 🚨
     # print("❗ Important notice")              # ❗

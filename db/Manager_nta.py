@@ -17,7 +17,7 @@ cur.execute("""
 CREATE TABLE IF NOT EXISTS manager_NTA (
   id BIGSERIAL PRIMARY KEY,
   display_name TEXT NOT NULL CHECK (length(btrim(display_name)) > 0),
-  label TEXT CHECK (role IN ('Technical_Operation','Data_Gateway','Risk','Tax_Evasion','Data_Management','Business_Intelligence')) DEFAULT 'Technical_Operation',
+  label TEXT CHECK (label IN ('Technical_Operation','Data_Gateway','Risk','Tax_Evasion','Data_Management','Business_Intelligence')) DEFAULT 'Technical_Operation',
   user_name text UNIQUE,
   phone_number TEXT,
   role TEXT CHECK (role IN ('admin','manager','member','viewer')) DEFAULT 'manager',

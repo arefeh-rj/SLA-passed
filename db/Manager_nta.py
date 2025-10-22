@@ -14,26 +14,22 @@ cur.execute("CREATE EXTENSION IF NOT EXISTS citext;")
 
 # 2) create table (matches your schema)
 cur.execute("""
-CREATE TABLE IF NOT EXISTS manager_NTA (
-  id BIGSERIAL PRIMARY KEY,
-  display_name TEXT NOT NULL CHECK (length(btrim(display_name)) > 0),
-  label TEXT CHECK (label IN ('Technical_Operation','Data_Gateway','Risk','Tax_Evasion','Data_Management','Business_Intelligence')) DEFAULT 'Technical_Operation',
-  user_name text UNIQUE,
-  phone_number TEXT,
-  role TEXT CHECK (role IN ('admin','manager','member','viewer')) DEFAULT 'manager',
-  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
-);
+ CREATE TABLE IF NOT EXISTS manager_NTA (
+      id BIGSERIAL PRIMARY KEY,
+      display_name TEXT NOT NULL CHECK (length(btrim(display_name)) > 0),
+      label TEXT NOT NULL CHECK (label IN ('Technical_Operation','Data_Gateway','Risk','Tax_Evasion','Data_Management','Business_Intelligence')) DEFAULT 'Technical_Operation',
+      manager_id BIGINT NOT NULL REFERENCES public."users"(id) ON UPDATE CASCADE ON DELETE RESTRICT
+    );
 """)
 
 # 3) insert rows — columns MUST match the table; use executemany for multiple rows
 sql = """
-INSERT INTO manager_NTA (display_name, label,user_name, phone_number, role)
-VALUES (%s, %s, %s, %s, %s)
+INSERT INTO manager_NTA (display_name, label, manager_id)
+VALUES (%s, %s, %s)
 """
 rows = [
-    ("پروفایلینگ - عملیات فنی", "Technical_Operation", "t.rashki", "989334522831", "manager"),
-    ("تبادل داده", "Data_Gateway","a.rajabian",  "989024610775", "manager"),
+    ("پروفایلینگ - عملیات فنی", "Technical_Operation", "1"),
+    ("تبادل داده", "Data_Gateway","2"),
 ]
 cur.executemany(sql, rows)
 

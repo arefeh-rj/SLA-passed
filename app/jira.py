@@ -1,7 +1,10 @@
 import os, requests
 from dotenv import load_dotenv 
 import json
+# from jira_exporter import _extract_cis
 import re
+# import re
+from datetime import datetime
 
 load_dotenv() 
 
@@ -33,6 +36,47 @@ def convert_duration(duration):
     return result or "0h"  # Return "0h" if no duration
 
 
+def ts_to_epoch(ts: str) -> float | None:
+    if not ts:
+        return None
+    ts = re.sub(r'([+-]\d{2})(\d{2})$', r'\1:\2', ts)
+    try:
+        return datetime.fromisoformat(ts).timestamp()
+    except ValueError:
+        for fmt in ("%Y-%m-%dT%H:%M:%S.%f%z", "%Y-%m-%dT%H:%M:%S%z"):
+            try:
+                return datetime.strptime(ts, fmt).timestamp()
+            except ValueError:
+                pass
+        return None
+
+def extract_status_changes(histories):
+    # print(json.dump(histories))
+    """
+    histories: the array you showed (issue['changelog']['histories'] or /changelog values)
+    returns: list of dicts with when/author/from/to, sorted ascending by time
+    # """
+    changes = []
+    for h in histories or []:
+        when = h.get("created")
+        who  = (h.get("author") or {}).get("displayName")
+        for it in h.get("items", []):
+            if it.get("field") == "status":
+                    
+                changes.append({
+                    "when": when,
+                    "when_dt": ts_to_epoch(when),
+                    "author": who,
+                    "from": it.get("fromString"),
+                    "to": it.get("toString"),
+                })
+                # print(json.dumps(changes, indent=2, ensure_ascii=False))
+            
+    # # sort oldest -> newest
+    changes.sort(key=lambda x: x["when_dt"] or datetime.min)
+    return changes
+
+
 def fetch_incidents(project_key: str, lookback_minutes: int = 15, max_results: int = 100):
     """
     Basic Auth with user+password (Jira Server/DC; Jira Cloud often DISALLOWS passwords).
@@ -42,18 +86,38 @@ def fetch_incidents(project_key: str, lookback_minutes: int = 15, max_results: i
     user = os.environ["JIRA_USERNAME"]
     password = os.environ["JIRA_PASSWORD"]  # <-- password, not API token
 
-  
+    #notify assignee
     jql = (        
         'project = "NTA TPS SM" AND issuetype = Incident AND filter = "32233" '
         'AND status in ( "In Progress - 2", "In Progress - 3")'
-        'AND "Time to resolution" < remaining("1h")'
-        'AND cf[18502] = "TO" '
+        'AND "Time to resolution" > remaining("1h")'
+        'AND labels  in (itsm ,ITSM ,ITSm)'
+        # 'AND cf[18502] = "TO" '
         # 'AND status CHANGED AFTER -7d'
 
         # project = "NTA TPS SM" AND issuetype = Incident AND filter = "32233" 
         # AND status in ( "In Progress - 2", "In Progress - 3")
         # AND "Time to resolution" < remaining("1h")
         # AND cf[18502] = "TO"  AND assignee != Unassigned
+
+        
+    )
+
+    #notify manager
+    jql = (        
+        'project = "NTA TPS SM" AND issuetype = Incident AND filter = "32233" '
+        'AND status in ( "In Progress - 2", "In Progress - 3")'
+        'AND "Time to resolution" > remaining("1h")'
+        'AND labels  in (itsm ,ITSM ,ITSm)'
+        # 'AND cf[18502] = "TO" '
+        # 'AND status CHANGED AFTER -7d'
+
+        # project = "NTA TPS SM" AND issuetype = Incident AND filter = "32233" 
+        # AND status in ( "In Progress - 2", "In Progress - 3")
+        # AND "Time to resolution" < remaining("1h")
+        # AND cf[18502] = "TO"  AND assignee != Unassigned
+
+        
     )
     
 
@@ -64,7 +128,7 @@ def fetch_incidents(project_key: str, lookback_minutes: int = 15, max_results: i
 
     resp = sess.post(
         f"{base}/rest/api/2/search",
-        json={"jql": jql, "maxResults": max_results,
+        json={"jql": jql, "maxResults": max_results,"expand": ["changelog"],
               "fields": ["summary", "status", "updated", "assignee", "reporter", "priority","remaining","customfield_10303", "customfield_17902"]},
         timeout=30,
     )
@@ -84,7 +148,7 @@ def fetch_incidents(project_key: str, lookback_minutes: int = 15, max_results: i
 
         # print(json.dumps(sla_field, indent=2, ensure_ascii=False))
 
-        
+        histories = (it.get("changelog") or {}).get("histories", [])
         remaining_time_data = sla_field.get("ongoingCycle", {}).get("remainingTime", {})
         # millis = remaining_time_data.get("millis", None)
         friendly_time = remaining_time_data.get("friendly", "N/A")
@@ -105,8 +169,8 @@ def fetch_incidents(project_key: str, lookback_minutes: int = 15, max_results: i
             "priority": (f.get("priority") or {}).get("name", "Unspecified"),
             "remaining" : f.get("remaining"),
             "SLA": convert_duration(friendly_time) ,
-            "NTA TPS CIs": f.get("customfield_17902")
-            # "millis" : remaining_time
+            "NTA TPS CIs": f.get("customfield_17902"),
+            "histories": extract_status_changes(histories)
             
         })
     return results

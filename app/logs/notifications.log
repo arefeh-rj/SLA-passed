@@ -1,0 +1,20 @@
+2025-10-20 16:20:49,575 - INFO - Notification sent to 989334522831: test:  
+        - Massage: درخواست اعطای مجوز به ایجاد فراداده وتکمیل داده های مربوطه در AM  ستاره
+        - 🚨SLA : -9h 15m
+         | Status: 200 | Response: {"result_code":200,"result_message":"Message Was Sent","request_id":707987797,"user_id":"a2e78823-55d5-4705-b491-a04ed9ffb62b"}
+2025-10-20 16:20:49,764 - INFO - Notification sent to 989334522831: test:  
+        - Massage: خطا در سناریو کال سنتر گمرک
+        - 🚨SLA : -6d 4h 37m
+         | Status: 200 | Response: {"result_code":200,"result_message":"Message Was Sent","request_id":707987875,"user_id":"a2e78823-55d5-4705-b491-a04ed9ffb62b"}
+2025-10-25 18:52:42,564 - INFO - Notification sent to 989334522831,( t.rashki): NTATPSSM-11325 | Status: 200 | Response: {"result_code":200,"result_message":"Message Was Sent","request_id":715353275,"user_id":"a2e78823-55d5-4705-b491-a04ed9ffb62b"}
+2025-10-25 18:52:42,717 - INFO - Notification sent to 989334522831,( t.rashki): NTATPSSM-11081 | Status: 200 | Response: {"result_code":200,"result_message":"Message Was Sent","request_id":715353276,"user_id":"a2e78823-55d5-4705-b491-a04ed9ffb62b"}
+2025-10-25 18:55:16,206 - INFO - Notification sent to 989334522831,( t.rashki): NTATPSSM-11325 | Status: 200 | Response: {"result_code":200,"result_message":"Message Was Sent","request_id":715353317,"user_id":"a2e78823-55d5-4705-b491-a04ed9ffb62b"}
+2025-10-25 18:55:16,433 - INFO - Notification sent to 989334522831,( t.rashki): NTATPSSM-11081 | Status: 200 | Response: {"result_code":200,"result_message":"Message Was Sent","request_id":715353454,"user_id":"a2e78823-55d5-4705-b491-a04ed9ffb62b"}
+2025-10-25 19:47:52,589 - INFO - Notification sent to 989334522831,( ): NTATPSSM-11399 | Status: 200 | Response: {"result_code":200,"result_message":"Message Was Sent","request_id":715636454,"user_id":"a2e78823-55d5-4705-b491-a04ed9ffb62b"}
+2025-10-25 19:47:53,044 - INFO - Notification sent to 989334522831,( a.mousaei): NTATPSSM-11362 | Status: 200 | Response: {"result_code":200,"result_message":"Message Was Sent","request_id":715636812,"user_id":"a2e78823-55d5-4705-b491-a04ed9ffb62b"}
+2025-10-25 19:47:53,840 - INFO - Notification sent to 989334522831,( ba.alizadeh): NTATPSSM-11337 | Status: 200 | Response: {"result_code":200,"result_message":"Message Was Sent","request_id":715637102,"user_id":"a2e78823-55d5-4705-b491-a04ed9ffb62b"}
+2025-10-25 19:47:54,453 - INFO - Notification sent to 989334522831,( a.seifi): NTATPSSM-11277 | Status: 200 | Response: {"result_code":200,"result_message":"Message Was Sent","request_id":715637724,"user_id":"a2e78823-55d5-4705-b491-a04ed9ffb62b"}
+2025-10-25 19:47:54,945 - INFO - Notification sent to 989334522831,( m.najaftomraei): NTATPSSM-11275 | Status: 200 | Response: {"result_code":200,"result_message":"Message Was Sent","request_id":715637995,"user_id":"a2e78823-55d5-4705-b491-a04ed9ffb62b"}
+2025-10-25 19:47:56,092 - INFO - Notification sent to 989334522831,( m.najaftomraei): NTATPSSM-10743 | Status: 200 | Response: {"result_code":200,"result_message":"Message Was Sent","request_id":715638608,"user_id":"a2e78823-55d5-4705-b491-a04ed9ffb62b"}
+2025-10-25 19:47:57,695 - INFO - Notification sent to 989334522831,( m.najaftomraei): NTATPSSM-10743 | Status: 200 | Response: {"result_code":200,"result_message":"Message Was Sent","request_id":715639725,"user_id":"a2e78823-55d5-4705-b491-a04ed9ffb62b"}
+2025-10-25 19:48:42,401 - INFO - Notification sent to 989334522831,( ba.alizadeh): NTATPSSM-11374 | Status: 200 | Response: {"result_code":200,"result_message":"Message Was Sent","request_id":715666187,"user_id":"a2e78823-55d5-4705-b491-a04ed9ffb62b"}

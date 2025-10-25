@@ -18,7 +18,7 @@ def get_manager_by_label(label: str):
       m.display_name  AS label_display_name,
       u.id            AS manager_id,
       u.user_name          AS manager_name,
-      u.email         AS manager_email
+      u.phone_number         AS phone_number
     FROM public."manager_NTA" m          -- <- quoted mixed-case
     JOIN public."users" u ON u.id = m.manager_id   -- quote if you created "users" with quotes
     WHERE m.label = %s

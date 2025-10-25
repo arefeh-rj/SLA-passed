@@ -68,7 +68,7 @@ def extract_status_changes(histories):
                     "from": it.get("fromString"),
                     "to": it.get("toString"),
                 })
-                # print(json.dumps(changes, indent=2, ensure_ascii=False))
+               
             
     # # sort oldest -> newest
     changes.sort(key=lambda x: x["when_dt"] or datetime.min)
@@ -99,7 +99,7 @@ def fetch_incidents(notifable: str , max_results: int = 100):
         jql = (        
             'project = "NTA TPS SM" AND issuetype = Incident AND filter = "32233" '
             'AND status in ( "In Progress - 2", "In Progress - 3")'
-            'AND "Time to resolution" < remaining("1h")'
+            'AND "Time to resolution" < remaining("4h")'
             'AND labels  in (itsm ,ITSM ,ITSm)'
                 
         )

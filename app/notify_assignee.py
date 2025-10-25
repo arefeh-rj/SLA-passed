@@ -17,13 +17,8 @@ def main():
     users_incidents = fetch_incidents(notifable="assignee" )
 
     for incident in users_incidents:
-        # with open("incident.json", "w", encoding="utf-8") as f:
-        #     json.dump(incident, f, indent=2, ensure_ascii=False)
-        # print(json.dumps(incident, indent=2, ensure_ascii=False))
-        
         # get users from DB 
         user = get_user(incident['accountId'])
-        # print(user)
 
         #fetch users phone number
         if user is not None: 
@@ -31,7 +26,7 @@ def main():
 
 
     for user in users_notif:
-        send_notification(user['incident'] , user['user'])
+        send_notification(user['incident'] , user['user'],'assignee')
    
     # print('hello',users_notif)
     # print("⚠️ Warning: Action needed!")      # ⚠️

@@ -1,9 +1,7 @@
 import os, requests
 from dotenv import load_dotenv 
 import json
-# from jira_exporter import _extract_cis
 import re
-# import re
 from datetime import datetime
 
 load_dotenv() 
@@ -77,7 +75,7 @@ def extract_status_changes(histories):
     return changes
 
 
-def fetch_incidents(project_key: str, lookback_minutes: int = 15, max_results: int = 100):
+def fetch_incidents(notifable: str , max_results: int = 100):
     """
     Basic Auth with user+password (Jira Server/DC; Jira Cloud often DISALLOWS passwords).
     Env needed: JIRA_BASE_URL, JIRA_USER_EMAIL, JIRA_PASSWORD
@@ -87,38 +85,24 @@ def fetch_incidents(project_key: str, lookback_minutes: int = 15, max_results: i
     password = os.environ["JIRA_PASSWORD"]  # <-- password, not API token
 
     #notify assignee
-    jql = (        
-        'project = "NTA TPS SM" AND issuetype = Incident AND filter = "32233" '
-        'AND status in ( "In Progress - 2", "In Progress - 3")'
-        'AND "Time to resolution" > remaining("1h")'
-        'AND labels  in (itsm ,ITSM ,ITSm)'
-        # 'AND cf[18502] = "TO" '
-        # 'AND status CHANGED AFTER -7d'
-
-        # project = "NTA TPS SM" AND issuetype = Incident AND filter = "32233" 
-        # AND status in ( "In Progress - 2", "In Progress - 3")
-        # AND "Time to resolution" < remaining("1h")
-        # AND cf[18502] = "TO"  AND assignee != Unassigned
-
-        
-    )
-
+    if notifable=="assignee":
+        jql = (        
+             'project = "NTA TPS SM" AND issuetype = Incident '
+            'AND filter = "32233" '
+            'AND status in ( "In Progress - 2", "In Progress - 3")'
+            'AND "Time to resolution" > remaining("4h")'
+            'AND labels  in (itsm ,ITSM ,ITSm)'
+            'AND assignee != Unassigned' 
+        )
     #notify manager
-    jql = (        
-        'project = "NTA TPS SM" AND issuetype = Incident AND filter = "32233" '
-        'AND status in ( "In Progress - 2", "In Progress - 3")'
-        'AND "Time to resolution" > remaining("1h")'
-        'AND labels  in (itsm ,ITSM ,ITSm)'
-        # 'AND cf[18502] = "TO" '
-        # 'AND status CHANGED AFTER -7d'
-
-        # project = "NTA TPS SM" AND issuetype = Incident AND filter = "32233" 
-        # AND status in ( "In Progress - 2", "In Progress - 3")
-        # AND "Time to resolution" < remaining("1h")
-        # AND cf[18502] = "TO"  AND assignee != Unassigned
-
-        
-    )
+    elif notifable=="manager":
+        jql = (        
+            'project = "NTA TPS SM" AND issuetype = Incident AND filter = "32233" '
+            'AND status in ( "In Progress - 2", "In Progress - 3")'
+            'AND "Time to resolution" < remaining("1h")'
+            'AND labels  in (itsm ,ITSM ,ITSm)'
+                
+        )
     
 
     sess = requests.Session()
@@ -139,7 +123,6 @@ def fetch_incidents(project_key: str, lookback_minutes: int = 15, max_results: i
     for it in data.get("issues", []):
         f = it["fields"]
         
-        owner = f.get("assignee") or f.get("reporter") or {}
         assignee = f.get("assignee") or {}
         assignee_id = assignee.get("accountId") or assignee.get("name") or ""
 
@@ -150,14 +133,9 @@ def fetch_incidents(project_key: str, lookback_minutes: int = 15, max_results: i
 
         histories = (it.get("changelog") or {}).get("histories", [])
         remaining_time_data = sla_field.get("ongoingCycle", {}).get("remainingTime", {})
-        # millis = remaining_time_data.get("millis", None)
         friendly_time = remaining_time_data.get("friendly", "N/A")
         
-        # Convert to days if absolute value >24 hours and millis is valid
-        # if isinstance(millis, (int, float)) and abs(millis) > 86400000:
-        #     days = millis // (1000 * 60 * 60 * 24)
-        #     hours = (abs(millis) % (1000 * 60 * 60 * 24)) // (1000 * 60 * 60)
-        #     remaining_time = f"{'' if millis < 0 else ''}{int(days)} days {hours}h"  
+     
     
         results.append({
             "key": it["key"],

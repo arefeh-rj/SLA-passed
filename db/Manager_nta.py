@@ -9,27 +9,30 @@ conn = psycopg2.connect(
 )
 cur = conn.cursor()
 
-# 1) enable extension BEFORE using CITEXT
+# Enable citext only if you actually plan to use the CITEXT type.
 cur.execute("CREATE EXTENSION IF NOT EXISTS citext;")
 
-# 2) create table (matches your schema)
+# Create the table (quoted because of mixed-case name)
 cur.execute("""
- CREATE TABLE IF NOT EXISTS manager_NTA (
-      id BIGSERIAL PRIMARY KEY,
-      display_name TEXT NOT NULL CHECK (length(btrim(display_name)) > 0),
-      label TEXT NOT NULL CHECK (label IN ('Technical_Operation','Data_Gateway','Risk','Tax_Evasion','Data_Management','Business_Intelligence')) DEFAULT 'Technical_Operation',
-      manager_id BIGINT NOT NULL REFERENCES public."users"(id) ON UPDATE CASCADE ON DELETE RESTRICT
-    );
+CREATE TABLE IF NOT EXISTS public."manager_NTA" (
+    id BIGSERIAL PRIMARY KEY,
+    display_name TEXT NOT NULL CHECK (length(btrim(display_name)) > 0),
+    label TEXT UNIQUE,
+    manager_id BIGINT NOT NULL REFERENCES public."users"(id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
+);
 """)
 
-# 3) insert rows — columns MUST match the table; use executemany for multiple rows
+# Insert rows — columns must match exactly; use ints for manager_id
 sql = """
-INSERT INTO manager_NTA (display_name, label, manager_id)
+INSERT INTO public."manager_NTA" (display_name, label, manager_id)
 VALUES (%s, %s, %s)
+ON CONFLICT (label) DO NOTHING
 """
 rows = [
-    ("پروفایلینگ - عملیات فنی", "Technical_Operation", "1"),
-    ("تبادل داده", "Data_Gateway","2"),
+    ("پروفایلینگ - عملیات فنی", "NTC-18755", 1),
+    ("تبادل داده", "NTC-19397", 2),
 ]
 cur.executemany(sql, rows)
 

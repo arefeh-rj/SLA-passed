@@ -22,3 +22,6 @@ def get_user(user_name: str):
             cur.execute(sql, (user_name,))
             row = cur.fetchone()
             return dict(row) if row else None
+        
+
+# def find_manager(manager_id:str):

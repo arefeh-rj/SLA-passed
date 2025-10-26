@@ -3,35 +3,36 @@ from dotenv import load_dotenv
 import json
 import re
 from datetime import datetime
+from app.calculate_SLA import weeks_days_from_sla
 
 load_dotenv() 
 
 def convert_duration(duration):
     # Match the pattern: optional minus sign, hours, 'h', optional space, minutes, 'm'
-    pattern = r'^(-)?(\d+)h\s*(\d+)m$'
-    match = re.match(pattern, duration)
-    
-    if not match:
+    pattern = r'^(-)?(\d+)h(?:\s*(\d+)m)?$'
+    m = re.match(pattern, duration.strip())
+    if not m:
         return "Invalid format"
-    
-    sign = match.group(1) if match.group(1) else ""  # Capture the sign
-    hours = int(match.group(2))                     # Extract hours
-    minutes = int(match.group(3))                   # Extract minutes
-    
-    # Calculate days and remaining hours
-    days = hours // 24
-    remaining_hours = hours % 24
-    
-    # Build the output string
-    result = ""
+
+    neg = bool(m.group(1))
+    hours = int(m.group(2))
+    minutes = int(m.group(3) or 0)
+
+    # Break hours into days and remaining hours
+    days, rem_hours = divmod(hours, 24)
+
+    parts = []
     if days > 0:
-        result += f"{sign}{days}d"
-    if remaining_hours > 0 or (days == 0 and minutes == 0):
-        result += f"{' ' if result else sign}{remaining_hours}h"
+        parts.append(f"{days}d")
+    # Show hours if non-zero OR if there are no days and minutes == 0 (so "0h")
+    if rem_hours > 0 or (days == 0 and minutes == 0):
+        parts.append(f"{rem_hours}h")
     if minutes > 0:
-        result += f"{' ' if result else sign}{minutes}m"
-    
-    return result or "0h"  # Return "0h" if no duration
+        parts.append(f"{minutes}m")
+
+    # If everything was zero, default to "0h"
+    result = " ".join(parts) if parts else "0h"
+    return ("-" if neg else "") + result
 
 
 def ts_to_epoch(ts: str) -> float | None:
@@ -49,11 +50,7 @@ def ts_to_epoch(ts: str) -> float | None:
         return None
 
 def extract_status_changes(histories):
-    # print(json.dump(histories))
-    """
-    histories: the array you showed (issue['changelog']['histories'] or /changelog values)
-    returns: list of dicts with when/author/from/to, sorted ascending by time
-    # """
+    
     changes = []
     for h in histories or []:
         when = h.get("created")
@@ -70,10 +67,18 @@ def extract_status_changes(histories):
                 })
                
             
-    # # sort oldest -> newest
+    # sort oldest -> newest
     changes.sort(key=lambda x: x["when_dt"] or datetime.min)
     return changes
 
+def incident_rejected(histories):
+    status_history = extract_status_changes(histories)
+    last = status_history[-1]
+    
+    if (last['from'] == 'resolved' and last['to'] == 'In Progress - 2'):
+        return True
+    
+    return False
 
 def fetch_incidents(notifable: str , max_results: int = 100):
     """
@@ -87,7 +92,7 @@ def fetch_incidents(notifable: str , max_results: int = 100):
     #notify assignee
     if notifable=="assignee":
         jql = (        
-             'project = "NTA TPS SM" AND issuetype = Incident '
+            'project = "NTA TPS SM" AND issuetype = Incident '
             'AND filter = "32233" '
             'AND status in ( "In Progress - 2", "In Progress - 3")'
             'AND "Time to resolution" > remaining("4h")'
@@ -101,6 +106,7 @@ def fetch_incidents(notifable: str , max_results: int = 100):
             'AND status in ( "In Progress - 2", "In Progress - 3")'
             'AND "Time to resolution" < remaining("4h")'
             'AND labels  in (itsm ,ITSM ,ITSm)'
+            'AND assignee != Unassigned'
                 
         )
     
@@ -128,14 +134,14 @@ def fetch_incidents(notifable: str , max_results: int = 100):
 
         # Extract SLA "Time to resolution"
         sla_field = f.get("customfield_10303", {})
-
         # print(json.dumps(sla_field, indent=2, ensure_ascii=False))
 
         histories = (it.get("changelog") or {}).get("histories", [])
-        remaining_time_data = sla_field.get("ongoingCycle", {}).get("remainingTime", {})
+        remaining_time_data = sla_field.get("goalDuration", {}).get("remainingTime", {})
         friendly_time = remaining_time_data.get("friendly", "N/A")
-        
-     
+        print(friendly_time)
+        # print(json.dumps(users_incidents, indent=2, ensure_ascii=False))
+
     
         results.append({
             "key": it["key"],
@@ -146,10 +152,11 @@ def fetch_incidents(notifable: str , max_results: int = 100):
             "accountId": assignee_id,
             "priority": (f.get("priority") or {}).get("name", "Unspecified"),
             "remaining" : f.get("remaining"),
-            "SLA": convert_duration(friendly_time) ,
+            # "SLA": convert_duration(friendly_time) ,
+            "SLA": weeks_days_from_sla(sla_field ,True),
             "NTA TPS CIs": f.get("customfield_17902"),
-            "histories": extract_status_changes(histories)
-            
+            # "history":extract_status_changes(histories),
+            "rejected": incident_rejected(histories)
         })
     return results
 

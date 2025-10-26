@@ -12,25 +12,20 @@ def main():
     users_notif=[]
     #fetch incidents
     users_incidents = fetch_incidents(notifable="assignee" )
+    # print(json.dumps(users_incidents, indent=2, ensure_ascii=False))
+    # for incident in users_incidents:
+    #     # get users from DB 
+    #     user = get_user(incident['accountId'])
 
-    for incident in users_incidents:
-        # get users from DB 
-        user = get_user(incident['accountId'])
-
-        #fetch users phone number
-        if user is not None: 
-            users_notif.append({'incident':incident,'user':user})
+    #     #fetch users phone number
+    #     if user is not None: 
+    #         users_notif.append({'incident':incident,'user':user})
 
 
-    for user in users_notif:
-        send_notification(user['incident'] , user['user'],'assignee')
+    # for user in users_notif:
+    #     send_notification(user['incident'] , user['user'],'assignee')
    
-    # print('hello',users_notif)
-    # print("⚠️ Warning: Action needed!")      # ⚠️
-    # print("🚨 Alert: SLA breached!")         # 🚨
-    # print("❗ Important notice")              # ❗
-    # print("❕Minor issue detected")           # ❕
-    # print("🔥 Critical failure")  
+   
 
 if __name__ == "__main__":
     main()

@@ -19,7 +19,7 @@ logging.basicConfig(
 
 def send_notification(incident:dict , user:dict , type:str):
     # print(json.dumps(user, indent=2, ensure_ascii=False))
-
+    print(user)
     url = os.environ["SPLUS_URL"]
     headers = {
         "Authorization": os.environ["SPLUS_AUTH_TOKEN"],
@@ -29,18 +29,18 @@ def send_notification(incident:dict , user:dict , type:str):
     massage = massages(type , incident)
     
     payload = {"phone_number": user['phone_number'], "text": massage  }
-    print(payload)
+    
     try:
 
         req = requests.post(url, headers=headers, json=payload, timeout=20)
         req.raise_for_status()
-        #Log successful notification
-        logging.info(f"Notification sent to {user['phone_number']},( {incident['accountId']}): {incident['key']} | Status: {req.status_code} | Response: {req.text}")
+      # Log successful notification
+        logging.info(f"Notification sent to {user['phone_number']},assignee:( { user['manager_name'] if user.get('manager_name') else incident['accountId']}): {incident['key']} | Status: {req.status_code} | Response: {req.text}")
         
         print(req.status_code, req.text)
     except requests.exceptions.RequestException as e:
-      #  Log error if request fails
-        logging.error(f"Failed to send notification to {user['phone_number']},( {incident['accountId']}): {incident['key']} | Error: {str(e)}")
+      # Log error if request fails
+        logging.error(f"Failed to send notification to {user['phone_number']},( {user['manager_name'] if user.get('manager_name') else incident['accountId']}): {incident['key']} | Error: {str(e)}")
         raise
 
 
@@ -48,13 +48,13 @@ def send_notification(incident:dict , user:dict , type:str):
 def massages(type: str ,incident:dict):
     # normal users notification
     if type == 'assignee':
-        massage= f"""test:  
-        - Massage: {incident['summary']}
+        massage= f"""incident : {incident['key']}
+        - پیام: {incident['summary']}
         - ⚠️SLA : {incident['SLA']}
         """
     elif type == 'manager':
-        massage= f"""test:  
-        - Massage: {incident['summary']}
+        massage= f"""incident :{incident['key']}
+        - پیام: {incident['summary']}
         - 🚨SLA : {incident['SLA']}
         """
 
@@ -62,6 +62,8 @@ def massages(type: str ,incident:dict):
 
     # manager notification
 
-    #rejected incidents notification 
+    #🚫rejected incidents notification 
 
     #unassigned incidents notification
+
+# def logging():

@@ -8,30 +8,58 @@ import json
 import redis
 import re
 
-def main():
-   
-    managers_notif=[]
 
-    #fetch incidents
-    managers= fetch_incidents(notifable="manager" )
+# send each product's manager less than 4 hours befor SLA
+def send_managers(manager_incidents):
+     managers_notif=[]
+     for incident in manager_incidents:
 
-    for incident in managers:
-        
         managers = []
         product_tags = [m for s in incident['NTA TPS CIs'] for m in re.findall(r'\bNTC-\d{5}\b', s)]
-        # print(result)
+        
+        #fetch managers by project label
         for item in product_tags:
             managers.append(get_manager_by_label(item))
 
-        #fetch users phone number
         for manager in managers:
             if manager is not None: 
                 managers_notif.append({'incident':incident,'manager':manager})
 
-    # print(json.dumps(managers_notif, indent=2, ensure_ascii=False))
+     return managers_notif
 
-    for manager in managers_notif:
-        send_notification(manager['incident'] , manager['manager'], 'manager')
+# send incidents to assginee
+def send_users(assignee_incidents):
+    users_notif=[]
+    for incident in assignee_incidents:
+        # get users from DB 
+        user = get_user(incident['accountId'])
+
+        #fetch users phone number
+        if user is not None: 
+            users_notif.append({'incident':incident,'user':user})
+
+    return users_notif
+
+
+# def rejected_incidents():
+
+
+def main():
+   
+    #fetch incidents
+    manager_incidents= fetch_incidents(notifable="manager" )
+    assignee_incidents=fetch_incidents(notifable="assignee" )
+
+    managers= send_managers(manager_incidents)
+    assignee= send_users(assignee_incidents)
+
+
+    for item in managers:
+        send_notification(item['incident'] ,item['manager'], 'manager')
+
+    for user in assignee:
+        send_notification(user['incident'] ,user['user'], 'assignee')
+
    
 
 if __name__ == "__main__":

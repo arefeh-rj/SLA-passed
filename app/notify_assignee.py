@@ -10,9 +10,6 @@ import redis
 def main():
    
     users_notif=[]
-    # label = get_manager_by_label('NTC-19397')
-    # print(label)
-
     #fetch incidents
     users_incidents = fetch_incidents(notifable="assignee" )
 
@@ -37,3 +34,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+

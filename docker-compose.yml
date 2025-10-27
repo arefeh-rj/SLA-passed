@@ -32,30 +32,19 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin
 
-  # redis:
-  #   image: redis:7
-  #   container_name: redis
-  #   # restart: unless-stopped
-  #   environment:
-  #     REDIS_PASSWORD: ${REDIS_PASSWORD:-redis_pw}
-  #   ports:
-  #     - "${REDIS_PORT:-6379}:6379"
-  #   # command: redis-server --requirepass ${REDIS_PASSWORD:-redis_pw}
-  #   volumes:
-  #     - redis_data:/data
     
-  redis:
-    image: redis:latest
-    command: redis-server --requirepass redis_pw
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data  
+  # redis:
+  #   image: redis:latest
+  #   command: redis-server --requirepass redis_pw
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis_data:/data  
 
 volumes:
   pg_data:
   pgadmin_data:
-  redis_data:
+  # redis_data:
 
 
 

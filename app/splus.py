@@ -3,8 +3,7 @@
 import os,requests
 from dotenv import load_dotenv
 import logging
-import redis
-import json
+# import json
 
 load_dotenv()  # reads .env in current directory
 os.makedirs('logs', exist_ok=True)

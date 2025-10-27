@@ -1,9 +1,0 @@
-﻿key,summary,status,assignee,priority,assignee_id,isWatching
-NTATPSSM-11029,مشکل max retry روی مجری uat,In Progress - 2,امیر فضل الهی,a.fazlollahi,High,0,False
-NTATPSSM-11020,خطا در سناریو کال سنتر گمرک,In Progress - 2,محمدحسین جان نثاری,h.jannesari,Critical,0,False
-NTATPSSM-11002,مشکل healthcheck,In Progress - 2,فرشاد جامع اصل,f.jame,High,0,False
-NTATPSSM-10994,خطای max depth of 10 reached,In Progress - 3,پارسا رحیمی,p.rahimi,High,0,False
-NTATPSSM-10905,عدم امکان ویرایش گزارش در pa(برقرار نشدن ارتباط pa‌با dia),In Progress - 3,محمد محمدی,moha.mohammadi,High,0,False
-NTATPSSM-10898,خطا هنگام افزودن کاربر جدید به سامانه در پنل ادمین,In Progress - 3,علی محسنی,al.mohseni,Medium,0,False
-NTATPSSM-5977,باگ حذف شدن اعشار ثانیه در پلاگین متغیر دستی,In Progress - 2,پارسا رحیمی,p.rahimi,High,0,False
-NTATPSSM-5336,مشکل در نمایش برچسب داده,In Progress - 2,امیر خلیلی,am.khalili,Medium,0,False

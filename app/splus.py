@@ -59,6 +59,7 @@ def messages(type: str ,incident:dict):
          massage= f""" 
         - رخداد : {incident['key']}
         - پیام: {incident['summary']}
+        - اولویت: {incident['priority']}
         - انجام دهنده: {incident['accountId']}
         {('- 🚫 وضعیت: رد شده' if incident.get('rejected') else '')}
         - 🚨SLA : {incident['SLA']}
@@ -73,22 +74,29 @@ def messages(type: str ,incident:dict):
     #unassigned incidents notification
 
 # def logging():
+# def messages(role: str, incident: dict) -> str:
+#     key      = incident.get('key', '—')
+#     summary  = incident.get('summary', '—')
+#     priority = incident.get('priority', '—')
+#     sla      = incident.get('SLA', '—')
+#     rejected = "<b>🚫 وضعیت:</b> رد شده\n" if incident.get('rejected') else ""
 
-# def messages(type: str, incident: dict) -> str:
-#     if type == 'assignee':
+#     if role == 'manager':
+#         assignee = incident.get('accountId', '—')
 #         return (
-#             f"- رخداد: {incident.get('key', '—')}\n"
-#             f"- پیام: {incident.get('summary', '—')}\n"
-#             f"{('- 🚫 وضعیت: رد شده\n' if incident.get('rejected')==False else '')}"
-#             f"- ⏱️ SLA: {incident.get('SLA', '—')}"
+#             f"<b>رخداد:</b> {key}\n"
+#             f"<b>پیام:</b> {summary}\n"
+#             f"<b>اولویت:</b> {priority}\n"
+#             f"<b>انجام‌دهنده:</b> {assignee}\n"
+#             f"{rejected}"
+#             f"<b>🚨 SLA:</b> {sla}"
 #         )
-#     elif type == 'manager':
-#         return (
-#             f"- رخداد: {incident.get('key', '—')}\n"
-#             f"- پیام: {incident.get('summary', '—')}\n"
-#             f"- انجام‌دهنده: {incident.get('accountId', '—')}\n"
-#             f"{('- 🚫 وضعیت: رد شده\n' if incident.get('rejected')==False else '')}"
-#             f"- 🚨 SLA: {incident.get('SLA', '—')}"
-#         )
-#     else:
-#         return "نوع پیام ناشناخته است."
+#     # assignee
+#     return (
+#         f"<b>رخداد:</b> {key}\n"
+#         f"<b>پیام:</b> {summary}\n"
+#         f"<b>اولویت:</b> {priority}\n"
+#         f"{rejected}"
+#         f"<b>⚠️ SLA:</b> {sla}"
+#     )
+

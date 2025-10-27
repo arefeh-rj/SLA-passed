@@ -49,17 +49,17 @@ def main():
     #fetch incidents
     manager_incidents= fetch_incidents(notifable="manager" )
     assignee_incidents=fetch_incidents(notifable="assignee" )
-    print(json.dumps(manager_incidents, indent=2, ensure_ascii=False))
+    # print(json.dumps(manager_incidents, indent=2, ensure_ascii=False))
 
-    # managers= send_managers(manager_incidents)
-    # assignee= send_users(assignee_incidents)
+    managers= send_managers(manager_incidents)
+    assignee= send_users(assignee_incidents)
 
 
-    # for item in managers:
-    #     send_notification(item['incident'] ,item['manager'], 'manager')
+    for item in managers:
+        send_notification(item['incident'] ,item['manager'], 'manager')
 
-    # for user in assignee:
-    #     send_notification(user['incident'] ,user['user'], 'assignee')
+    for user in assignee:
+        send_notification(user['incident'] ,user['user'], 'assignee')
 
    
 

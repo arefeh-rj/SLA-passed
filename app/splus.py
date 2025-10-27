@@ -19,14 +19,14 @@ logging.basicConfig(
 
 def send_notification(incident:dict , user:dict , type:str):
     # print(json.dumps(user, indent=2, ensure_ascii=False))
-    print(user)
+    
     url = os.environ["SPLUS_URL"]
     headers = {
         "Authorization": os.environ["SPLUS_AUTH_TOKEN"],
         "Content-Type": "application/json",
     }
 
-    massage = massages(type , incident)
+    massage = messages(type , incident)
     
     payload = {"phone_number": user['phone_number'], "text": massage  }
     
@@ -45,19 +45,25 @@ def send_notification(incident:dict , user:dict , type:str):
 
 
 
-def massages(type: str ,incident:dict):
+def messages(type: str ,incident:dict):
     # normal users notification
     if type == 'assignee':
-        massage= f"""incident : {incident['key']}
+        massage= f""" 
+        - رخداد : {incident['key']}
         - پیام: {incident['summary']}
+        - اولویت: {incident['priority']}
+        {('- 🚫 وضعیت: رد شده' if incident.get('rejected') else '')}
         - ⚠️SLA : {incident['SLA']}
         """
     elif type == 'manager':
-        massage= f"""incident :{incident['key']}
+         massage= f""" 
+        - رخداد : {incident['key']}
         - پیام: {incident['summary']}
+        - انجام دهنده: {incident['accountId']}
+        {('- 🚫 وضعیت: رد شده' if incident.get('rejected') else '')}
         - 🚨SLA : {incident['SLA']}
         """
-
+       
     return massage
 
     # manager notification
@@ -67,3 +73,22 @@ def massages(type: str ,incident:dict):
     #unassigned incidents notification
 
 # def logging():
+
+# def messages(type: str, incident: dict) -> str:
+#     if type == 'assignee':
+#         return (
+#             f"- رخداد: {incident.get('key', '—')}\n"
+#             f"- پیام: {incident.get('summary', '—')}\n"
+#             f"{('- 🚫 وضعیت: رد شده\n' if incident.get('rejected')==False else '')}"
+#             f"- ⏱️ SLA: {incident.get('SLA', '—')}"
+#         )
+#     elif type == 'manager':
+#         return (
+#             f"- رخداد: {incident.get('key', '—')}\n"
+#             f"- پیام: {incident.get('summary', '—')}\n"
+#             f"- انجام‌دهنده: {incident.get('accountId', '—')}\n"
+#             f"{('- 🚫 وضعیت: رد شده\n' if incident.get('rejected')==False else '')}"
+#             f"- 🚨 SLA: {incident.get('SLA', '—')}"
+#         )
+#     else:
+#         return "نوع پیام ناشناخته است."

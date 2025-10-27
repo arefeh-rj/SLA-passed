@@ -12,7 +12,7 @@ def main():
     users_notif=[]
     #fetch incidents
     users_incidents = fetch_incidents(notifable="assignee" )
-    # print(json.dumps(users_incidents, indent=2, ensure_ascii=False))
+    print(json.dumps(users_incidents, indent=2, ensure_ascii=False))
     # for incident in users_incidents:
     #     # get users from DB 
     #     user = get_user(incident['accountId'])

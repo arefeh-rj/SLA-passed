@@ -35,6 +35,11 @@ def convert_duration(duration):
     return ("-" if neg else "") + result
 
 
+def is_negative_label(label: str) -> bool:
+    MINUS_RE = re.compile(r'^\s*[-\u2212]\s*')  # "-" or "−"
+    """True if label starts with a minus sign (e.g., '-1w 2d' or '− 3h')."""
+    return bool(MINUS_RE.match((label or "").strip()))
+
 def ts_to_epoch(ts: str) -> float | None:
     if not ts:
         return None
@@ -134,13 +139,12 @@ def fetch_incidents(notifable: str , max_results: int = 100):
 
         # Extract SLA "Time to resolution"
         sla_field = f.get("customfield_10303", {})
-        # print(json.dumps(sla_field, indent=2, ensure_ascii=False))
 
         histories = (it.get("changelog") or {}).get("histories", [])
-        remaining_time_data = sla_field.get("goalDuration", {}).get("remainingTime", {})
+        remaining_time_data = sla_field.get("ongoingCycle", {}).get("remainingTime", {})
         friendly_time = remaining_time_data.get("friendly", "N/A")
-        print(friendly_time)
-        # print(json.dumps(users_incidents, indent=2, ensure_ascii=False))
+        sla1 = convert_duration(friendly_time)                 # e.g. "-1w 2d 5h 24m"
+        sla2 = weeks_days_from_sla(sla_field, True)
 
     
         results.append({
@@ -152,8 +156,7 @@ def fetch_incidents(notifable: str , max_results: int = 100):
             "accountId": assignee_id,
             "priority": (f.get("priority") or {}).get("name", "Unspecified"),
             "remaining" : f.get("remaining"),
-            # "SLA": convert_duration(friendly_time) ,
-            "SLA": weeks_days_from_sla(sla_field ,True),
+            "SLA": f"{sla1 if is_negative_label(sla2) else sla2}",
             "NTA TPS CIs": f.get("customfield_17902"),
             # "history":extract_status_changes(histories),
             "rejected": incident_rejected(histories)

@@ -11,7 +11,7 @@ os.makedirs('logs', exist_ok=True)
 
 # Configure logging
 logging.basicConfig(
-    filename='app/logs/notifications.log',
+    filename='logs/notifications.log',
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
@@ -37,7 +37,7 @@ def send_notification(incident:dict , user:dict , type:str):
       # Log successful notification
         logging.info(f"Notification sent to {user['phone_number']},assignee:( { user['manager_name'] if user.get('manager_name') else incident['accountId']}): {incident['key']} | Status: {req.status_code} | Response: {req.text}")
         
-        print(req.status_code, req.text)
+        # print(req.status_code, req.text)
     except requests.exceptions.RequestException as e:
       # Log error if request fails
         logging.error(f"Failed to send notification to {user['phone_number']},( {user['manager_name'] if user.get('manager_name') else incident['accountId']}): {incident['key']} | Error: {str(e)}")
@@ -67,9 +67,6 @@ def messages(type: str ,incident:dict):
        
     return massage
 
-    # manager notification
-
-    #🚫rejected incidents notification 
 
     #unassigned incidents notification
 

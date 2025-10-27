@@ -4,8 +4,6 @@ from db.find_users import get_user
 from db.find_manager import get_manager_by_label
 from app.jira import fetch_incidents
 from app.splus import send_notification
-import json
-import redis
 
 def main():
    

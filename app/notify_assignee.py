@@ -1,5 +1,12 @@
+import os, sys
 
-# from app.jira_notify import fetch_all_issues, write_issues_csv
+# Always add the project root to sys.path dynamically
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.abspath(os.path.join(current_dir, '..'))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
+
 from db.find_users import get_user
 from db.find_manager import get_manager_by_label
 from app.jira import fetch_incidents

@@ -44,28 +44,36 @@ def send_notification(incident:dict , user:dict , type:str):
         raise
 
 
+import os
 
-def messages(type: str ,incident:dict):
+def messages(type: str, incident: dict):
     base = os.environ["JIRA_URL"].rstrip("/")
-    # normal users notification
+
+    # Common header part
+    message = (
+        f"رخداد: {base}/browse/{incident.get('key', '-')}\n"
+        f"اولویت: {incident.get('priority', '-')}\n"
+    )
+
+   
+
+    # Handle unassigned logic (adds or replaces assignee info)
+    if incident.get('unassigned'):
+        message += "انجام دهنده: Unassigned\n"
+    elif type == 'assignee':  # only add if not already added for manager
+        message += f"انجام دهنده: {incident.get('accountId', 'نامشخص')}\n"
+
+    # Optionally handle rejected status (uncomment if needed)
+    # if incident.get('rejected'):
+    #     message += "- 🚫 وضعیت: رد شده\n"
+
+ # SLA line differs based on type
     if type == 'assignee':
-        massage=(
-             f"رخداد: {base}/browse/{incident['key']}\n"
-             f"اولویت: {incident['priority']}\n"
-             f"انجام دهنده: {incident['accountId']}\n"
-             f" ⚠️SLA: {incident['SLA']}\n"
-
-        )
-
+        message += f"⚠️SLA: {incident.get('SLA', '-')}\n"
     elif type == 'manager':
-        massage=(
-             f"رخداد: {base}/browse/{incident['key']}\n"
-             f"اولویت: {incident['priority']}\n"
-             f"انجام دهنده: {incident['accountId']}\n"
-             f" 🚨SLA: {incident['SLA']}\n"
-
+        message += (
+            f"🚨SLA: {incident.get('SLA', '-')}\n"
         )
-        
-    #     {('- 🚫 وضعیت: رد شده' if incident.get('rejected') else '')}
-           
-    return massage
+
+    return message
+

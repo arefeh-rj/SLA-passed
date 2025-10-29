@@ -1,5 +1,5 @@
 import os, sys
-
+import json
 # Always add the project root to sys.path dynamically
 current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.abspath(os.path.join(current_dir, '..'))
@@ -19,10 +19,16 @@ def main():
     users_incidents = fetch_incidents(notifable="assignee" )
     # print(json.dumps(users_incidents, indent=2, ensure_ascii=False))
     for incident in users_incidents:
+        
+        # handle unassigned incidents
+        if not incident['accountId'] :
+            incident['accountId'] = "t.rashki"
+            incident['unassigned'] = True
+    
         # get users from DB 
         user = get_user(incident['accountId'])
 
-        #fetch users phone number
+        # fetch users phone number
         if user is not None: 
             users_notif.append({'incident':incident,'user':user})
 

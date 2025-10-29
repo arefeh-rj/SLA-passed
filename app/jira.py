@@ -102,7 +102,7 @@ def fetch_incidents(notifable: str , max_results: int = 100):
             'AND status in ( "In Progress - 2", "In Progress - 3")'
             'AND "Time to resolution" > remaining("4h")'
             'AND labels  in (itsm ,ITSM ,ITSm)'
-            'AND assignee != Unassigned' 
+            # 'AND assignee != Unassigned' 
         )
     #notify manager
     elif notifable=="manager":
@@ -135,6 +135,7 @@ def fetch_incidents(notifable: str , max_results: int = 100):
         f = it["fields"]
         
         assignee = f.get("assignee") or {}
+        
         assignee_id = assignee.get("accountId") or assignee.get("name") or ""
 
         # Extract SLA "Time to resolution"
@@ -159,7 +160,8 @@ def fetch_incidents(notifable: str , max_results: int = 100):
             "SLA": f"{sla1 if is_negative_label(sla2) else sla2}",
             "NTA TPS CIs": f.get("customfield_17902"),
             # "history":extract_status_changes(histories),
-            "rejected": incident_rejected(histories)
+            "rejected": incident_rejected(histories),
+            "unassigned":False
         })
     return results
 

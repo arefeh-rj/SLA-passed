@@ -39,7 +39,6 @@ def send_users(assignee_incidents):
     return users_notif
 
 
-# def rejected_incidents():
 
 
 def main():

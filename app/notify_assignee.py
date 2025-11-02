@@ -1,5 +1,7 @@
 import os, sys
 import json
+import logging
+import traceback
 # Always add the project root to sys.path dynamically
 current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.abspath(os.path.join(current_dir, '..'))
@@ -33,8 +35,20 @@ def main():
             users_notif.append({'incident':incident,'user':user})
 
 
-    for user in users_notif:
-        send_notification(user['incident'] , user['user'],'assignee')
+    for item in users_notif:
+        try:
+            send_notification(item['incident'], item['user'], 'assignee')
+        except Exception as e:
+            logging.error(
+                "Continuing after notification failure | incident=%s user=%s error=%s",
+                item['incident'].get('key'),
+                item['user'].get('accountId'),
+                e,
+                exc_info=True,
+            )
+        # continue to next item automatically
+
+        # send_notification(user['incident'] , user['user'],'assignee')
    
    
 

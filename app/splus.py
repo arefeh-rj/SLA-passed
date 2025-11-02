@@ -34,12 +34,12 @@ def send_notification(incident:dict , user:dict , type:str):
 
         req = requests.post(url, headers=headers, json=payload, timeout=20)
         req.raise_for_status()
-      # Log successful notification
+      
         logging.info(f"Notification sent to {user['phone_number']},assignee:( { user['manager_name'] if user.get('manager_name') else incident['accountId']}): {incident['key']} | Status: {req.status_code} | Response: {req.text}")
         # print(req.status_code, req.text)
         print(f"✔️Notification sent to {user['phone_number']},assignee:( { user['manager_name'] if user.get('manager_name') else incident['accountId']}): {incident['key']} | Status: {req.status_code} | Response: {req.text}")
     except requests.exceptions.RequestException as e:
-      # Log error if request fails
+     
         logging.error(f"Failed to send notification to {user['phone_number']},( {user['manager_name'] if user.get('manager_name') else incident['accountId']}): {incident['key']} | Error: {str(e)}")
         raise
 
@@ -56,11 +56,10 @@ def messages(type: str, incident: dict):
     )
 
    
-
     # Handle unassigned logic (adds or replaces assignee info)
     if incident.get('unassigned'):
         message += "انجام دهنده: Unassigned\n"
-    elif type == 'assignee':  # only add if not already added for manager
+    elif type == 'assignee' or type == 'manager' :  # only add if not already added for manager
         message += f"انجام دهنده: {incident.get('accountId', 'نامشخص')}\n"
 
     # Optionally handle rejected status (uncomment if needed)

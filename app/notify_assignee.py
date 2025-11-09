@@ -1,7 +1,7 @@
 import os, sys
-import json
+# import json
 import logging
-import traceback
+# import traceback
 # Always add the project root to sys.path dynamically
 current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.abspath(os.path.join(current_dir, '..'))
@@ -10,7 +10,7 @@ if project_root not in sys.path:
 
 
 from db.find_users import get_user
-from db.find_manager import get_manager_by_label
+# from db.find_manager import get_manager_by_label
 from app.jira import fetch_incidents
 from app.splus import send_notification
 

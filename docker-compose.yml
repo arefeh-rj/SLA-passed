@@ -25,7 +25,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@example.com}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin_pw}
     ports:
-      - - 8080:80
+      -  8080:80
     depends_on:
       db:
         condition: service_healthy
@@ -33,18 +33,10 @@ services:
       - pgadmin_data:/var/lib/pgadmin
 
     
-  # redis:
-  #   image: redis:latest
-  #   command: redis-server --requirepass redis_pw
-  #   ports:
-  #     - "6379:6379"
-  #   volumes:
-  #     - redis_data:/data  
-
+  
 volumes:
   pg_data:
   pgadmin_data:
-  # redis_data:
 
 
 

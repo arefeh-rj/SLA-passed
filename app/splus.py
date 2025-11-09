@@ -44,7 +44,7 @@ def send_notification(incident:dict , user:dict , type:str):
         raise
 
 
-import os
+
 
 def messages(type: str, incident: dict):
     base = os.environ["JIRA_URL"].rstrip("/")

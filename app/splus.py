@@ -53,6 +53,7 @@ def messages(type: str, incident: dict):
     message = (
         f"رخداد: {base}/browse/{incident.get('key', '-')}\n"
         f"اولویت: {incident.get('priority', '-')}\n"
+
     )
 
    
@@ -61,6 +62,8 @@ def messages(type: str, incident: dict):
         message += "انجام دهنده: Unassigned\n"
     elif type == 'assignee' or type == 'manager' :  # only add if not already added for manager
         message += f"انجام دهنده: {incident.get('accountId', 'نامشخص')}\n"
+
+    message +=   f"عنوان: {incident.get('summary', '-')}\n"
 
     # Optionally handle rejected status (uncomment if needed)
     # if incident.get('rejected'):
